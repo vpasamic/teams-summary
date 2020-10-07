@@ -10,9 +10,8 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
-
+let members=[]
 async function init(){
-    let teamHTML="";
     try{
         let size= await teamsize();
         let team = size.teamsize;
@@ -29,20 +28,24 @@ async function init(){
                     let z = await createManager();
                     let number = z.number;
                     let manager= new Manager (name,id,email,number);
+                    members.push(manager);
                     break;
                 case "Intern":
                     let y = await createIntern();
                     let school = y.school;
-                    let intern= new Intern (name,id,email,school)
+                    let intern= new Intern (name,id,email,school);
+                    members.push(intern);
                     break;
                 case "Engineer":
                     let x = await createEngineer();
                     let github = x.github
-                    let engineer = new Engineer(name,id,email,github)
+                    let engineer = new Engineer(name,id,email,github);
+                    members.push(engineer);
                     break;
 
             }
         }
+        await generatehtml(members)
     }catch(err){
         console.log(err)
     }
@@ -56,7 +59,9 @@ function teamsize(){
         name: "teamsize"
     })
 }
-
+function generatehtml(){
+    return writeFileAsync("./index.html", render(members))
+}
 function createemployee(){
     const questions = [{
         type: "input",
