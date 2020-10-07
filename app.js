@@ -10,6 +10,29 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+async function init(){
+    try{
+        let size= await teamsize();
+        let team = size.teamsize;
+        if (team === 0){
+            return;
+        }else for (i= 0; i < team; i++){
+            console.log(i)
+        }
+    }catch(err){
+        console.log(err)
+    }
+};
+
+function teamsize(){
+    return inquirer.prompt({
+        type:"number",
+        message:"Number of team members:",
+        name: "teamsize"
+    })
+}
+
+init();
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
