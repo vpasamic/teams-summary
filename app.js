@@ -17,7 +17,12 @@ async function init(){
         if (team === 0){
             return;
         }else for (i= 0; i < team; i++){
-            console.log(i)
+            let employee = await createemployee();
+            let name = employee.name;
+            let id = employee.id;
+            let email = employee.email;
+            let title = employee.title
+
         }
     }catch(err){
         console.log(err)
@@ -32,6 +37,42 @@ function teamsize(){
     })
 }
 
+function createemployee(){
+    const questions = [{
+        type: "input",
+        message: "Employee Name:",
+        name: "name"
+    },
+    {
+        type: "input",
+        message: "Employee ID:",
+        name: "id"
+    },
+    {
+        type: "input",
+        message: "Employee Email:",
+        name: "email"
+    },
+    {
+        type: "list",
+        message: "Employee Title:",
+        name: "title",
+        choices: ["Engineer", "Intern", "Manager"]
+    }]
+    return inquirer.prompt(questions)
+}
+
+
+function Engineer(){
+
+}
+function Intern(){
+
+}
+
+function Manager(){
+
+}
 init();
 
 // Write code to use inquirer to gather information about the development team members,
